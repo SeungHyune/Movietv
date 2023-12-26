@@ -6,15 +6,12 @@ const Theme = () => {
 
   const onThemeChange = () => {
     setMovieState({
+      ...movieState,
       isTheme: !movieState.isTheme
     });
   };
 
-  return (
-    <button onClick={onThemeChange}>
-      {movieState.isTheme ? '밝게' : '어둡게'}
-    </button>
-  );
+  return <button onClick={onThemeChange}>{movieState.isTheme ? '밝게' : '어둡게'}</button>;
 };
 
 export default Theme;

@@ -9,17 +9,15 @@ const Search = () => {
 
   const onSubmitSearchMovie = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setMovieState({
-      ...movieState,
-      title: value
-    });
 
     const res = await fetchMovieList(value);
-    console.log(res);
     const { Search } = res;
+
     setMovieState({
       ...movieState,
-      movieList: [...movieState.movieList, ...Search]
+      movieList: [...Search],
+      title: value,
+      page: movieState.page + 1
     });
   };
 
