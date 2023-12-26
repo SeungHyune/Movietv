@@ -2,6 +2,7 @@ import { movieAtom } from '@/atoms/movie';
 import { useRecoilState } from 'recoil';
 import { useInput } from '@/hooks/useInput';
 import { fetchMovieList } from '../../../api/movieSearch';
+import { FaSearch } from 'react-icons/fa';
 
 const Search = () => {
   const { value, onInputChange } = useInput();
@@ -25,10 +26,13 @@ const Search = () => {
     <form onSubmit={onSubmitSearchMovie}>
       <input
         type="text"
+        placeholder="검색어를 입력해주세요."
         value={value}
         onChange={onInputChange}
       />
-      <button>검색</button>
+      <button>
+        <FaSearch />
+      </button>
     </form>
   );
 };

@@ -11,7 +11,17 @@ const Theme = () => {
     });
   };
 
-  return <button onClick={onThemeChange}>{movieState.isTheme ? '밝게' : '어둡게'}</button>;
+  return (
+    <button onClick={onThemeChange}>
+      <img
+        src={
+          movieState.isTheme
+            ? 'https://github.com/SeungHyune/vue-movie/blob/main/image/theme/light-icon.png?raw=true'
+            : 'https://github.com/SeungHyune/vue-movie/blob/main/image/theme/dark-icon.png?raw=true'
+        }
+      />
+    </button>
+  );
 };
 
 export default Theme;
