@@ -54,15 +54,3 @@ header .header-info form button {
 header .header-info form button svg {
   color: white;
 }
-
-header .header-info button {
-  background-color: transparent;
-  border: 0;
-  width: 16px;
-  height: 16px;
-}
-
-header .header-info button img {
-  width: 16px;
-  height: 16px;
-}
