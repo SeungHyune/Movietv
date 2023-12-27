@@ -19,7 +19,7 @@ const MovieList = () => {
   };
 
   return (
-    <div>
+    <main>
       <ul>
         {movieList.map((movie) => (
           <li key={movie.imdbID}>{movie.Title}</li>
@@ -32,7 +32,7 @@ const MovieList = () => {
           More
         </button>
       ) : null}
-    </div>
+    </main>
   );
 };
 
