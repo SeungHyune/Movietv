@@ -1,0 +1,55 @@
+.movielist-container > ul {
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-template-columns: repeat(5, 1fr);
+  row-gap: 20px;
+  column-gap: 20px;
+}
+
+.movielist-container > ul > li {
+  position: relative;
+  list-style: none;
+  cursor: pointer;
+}
+
+.movielist-container > ul > li:hover::before {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  content: '';
+  background-color: rgba(0,0,0,0.5);
+  z-index: 10;
+}
+
+.movielist-container > ul > li:hover img {
+  transform: scale(1.03);
+}
+
+.movielist-container > ul > li:hover .movie-info {
+  opacity: 1;
+}
+
+.movielist-container > ul > li .movie-poster {
+  height: 100%;
+  overflow: hidden;
+}
+
+.movielist-container > ul > li .movie-poster img {
+  max-width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .2s;
+}
+
+.movielist-container > ul > li .movie-info {
+  opacity: 0;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  transition: opacity .2s;
+  color: #fff;
+  z-index: 20;
+}

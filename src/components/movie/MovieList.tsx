@@ -1,6 +1,9 @@
 import { movieAtom } from '@/atoms/movie';
 import { useRecoilState } from 'recoil';
 import { fetchMovieList } from '@/api/movieSearch';
+import MovieItem from './MovieItem';
+
+import './movie.css';
 
 const MovieList = () => {
   const [movieState, setMovieState] = useRecoilState(movieAtom);
@@ -20,18 +23,23 @@ const MovieList = () => {
 
   return (
     <main>
-      <ul>
-        {movieList.map((movie) => (
-          <li key={movie.imdbID}>{movie.Title}</li>
-        ))}
-      </ul>
-      {movieList.length ? (
-        <button
-          type="button"
-          onClick={handleAddMovie}>
-          More
-        </button>
-      ) : null}
+      <div className="movielist-container">
+        <ul>
+          {movieList.map((movie) => (
+            <MovieItem
+              key={movie.imdbID}
+              movie={movie}
+            />
+          ))}
+        </ul>
+        {movieList.length ? (
+          <button
+            type="button"
+            onClick={handleAddMovie}>
+            More
+          </button>
+        ) : null}
+      </div>
     </main>
   );
 };
