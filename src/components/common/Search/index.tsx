@@ -14,14 +14,16 @@ const Search = () => {
     if (movieState.title === value) return;
 
     const res = await fetchMovieList(value);
-    const { Search } = res;
+
+    const { Search, totalResults } = res;
 
     if (Search) {
       setMovieState({
         ...movieState,
         movieList: [...Search],
         title: value,
-        page: movieState.page + 1
+        page: movieState.page + 1,
+        totalResults
       });
     } else {
       setMovieState({

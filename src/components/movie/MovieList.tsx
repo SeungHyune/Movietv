@@ -2,9 +2,9 @@ import { movieAtom } from '@/atoms/movie';
 import { useRecoilState } from 'recoil';
 import { fetchMovieList } from '@/api/movieSearch';
 import MovieItem from './MovieItem';
+import MovieTotalResult from './MovieTotalResult';
 
 import './movie.css';
-import MovieTotalCount from './MovieTotalCount';
 
 const MovieList = () => {
   const [movieState, setMovieState] = useRecoilState(movieAtom);
@@ -25,7 +25,7 @@ const MovieList = () => {
   return (
     <main>
       <div className="movielist-container">
-        <MovieTotalCount />
+        {movieState.totalResults ? <MovieTotalResult /> : null}
         <ul>
           {movieList.map((movie) => (
             <MovieItem
