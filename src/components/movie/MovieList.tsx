@@ -4,6 +4,7 @@ import { fetchMovieList } from '@/api/movieSearch';
 import MovieItem from './MovieItem';
 
 import './movie.css';
+import MovieTotalCount from './MovieTotalCount';
 
 const MovieList = () => {
   const [movieState, setMovieState] = useRecoilState(movieAtom);
@@ -13,7 +14,7 @@ const MovieList = () => {
     console.log(movieState.title);
     const res = await fetchMovieList(movieState.title, movieState.page);
     const { Search } = res;
-    console.log(res);
+
     setMovieState({
       ...movieState,
       movieList: [...movieList, ...Search],
@@ -24,6 +25,7 @@ const MovieList = () => {
   return (
     <main>
       <div className="movielist-container">
+        <MovieTotalCount />
         <ul>
           {movieList.map((movie) => (
             <MovieItem
