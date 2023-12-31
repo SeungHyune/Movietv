@@ -23,26 +23,24 @@ const MovieList = () => {
   };
 
   return (
-    <main>
-      <div className="movielist-container">
-        {movieState.totalResults ? <MovieTotalResult /> : null}
-        <ul>
-          {movieList.map((movie) => (
-            <MovieItem
-              key={movie.imdbID}
-              movie={movie}
-            />
-          ))}
-        </ul>
-        {movieList.length ? (
-          <button
-            type="button"
-            onClick={handleAddMovie}>
-            More
-          </button>
-        ) : null}
-      </div>
-    </main>
+    <div className="movielist-container">
+      {movieState.totalResults ? <MovieTotalResult /> : null}
+      <ul>
+        {movieList.map((movie) => (
+          <MovieItem
+            key={movie.imdbID}
+            movie={movie}
+          />
+        ))}
+      </ul>
+      {movieList.length ? (
+        <button
+          type="button"
+          onClick={handleAddMovie}>
+          More
+        </button>
+      ) : null}
+    </div>
   );
 };
 
