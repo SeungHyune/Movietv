@@ -1,12 +1,29 @@
-import { MovieInfoResponse } from '../../types/movieTypes';
+import { useNavigate } from 'react-router-dom';
+import { MovieInfoResponse, ResponseValue } from '../../types/movieTypes';
+import { fetchMovieInfo } from '@/api/movieInfo';
+import { useRecoilState } from 'recoil';
+import { movieAtom } from '@/atoms/movie';
 
 interface MovieItemProps {
-  movie: MovieInfoResponse[];
+  movie: MovieInfoResponse;
 }
 
 const MovieItem = ({ movie }: MovieItemProps) => {
+  const [movieState, setMovieState] = useRecoilState(movieAtom);
+  const navigate = useNavigate();
+
+  const handleMovieInfo = async () => {
+    const movieInfo = await fetchMovieInfo(movie.imdbID);
+
+    setMovieState({
+      ...movieState,
+      movieInfo: { ...movieInfo }
+    });
+    navigate(`./${movie.imdbID}`);
+  };
+
   return (
-    <li>
+    <li onClick={handleMovieInfo}>
       <div className="movie-poster">
         <img src={movie.Poster} />
       </div>
