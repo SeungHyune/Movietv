@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { MovieInfoResponse, ResponseValue } from '../../types/movieTypes';
+import { MovieInfoResponse } from '../../types/movieTypes';
 import { fetchMovieInfo } from '@/api/movieInfo';
 import { useRecoilState } from 'recoil';
 import { movieAtom } from '@/atoms/movie';
