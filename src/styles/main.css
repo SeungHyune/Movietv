@@ -3,3 +3,7 @@
 main {
   padding-top: 80px;
 }
+main .main-wrap {
+  max-width: 1400px;
+  margin: 0 auto;
+}

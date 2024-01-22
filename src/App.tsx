@@ -10,20 +10,22 @@ function App() {
     <BrowserRouter>
       <Header />
       <main>
-        <Routes>
-          <Route
-            path="/"
-            element={<Home />}
-          />
-          <Route
-            path="/movie/:movieTitle"
-            element={<MovieList />}
-          />
-          <Route
-            path="/movie/:movieTitle/:id"
-            element={<MovieInfo />}
-          />
-        </Routes>
+        <div className="main-wrap">
+          <Routes>
+            <Route
+              path="/"
+              element={<Home />}
+            />
+            <Route
+              path="/movie/:movieTitle"
+              element={<MovieList />}
+            />
+            <Route
+              path="/movie/:movieTitle/:id"
+              element={<MovieInfo />}
+            />
+          </Routes>
+        </div>
       </main>
     </BrowserRouter>
   );

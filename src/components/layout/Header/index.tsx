@@ -7,12 +7,14 @@ const Header = () => {
   const navigator = useNavigate();
   return (
     <header>
-      <h1 onClick={() => navigator('/')}>
-        <span>MovieTV</span>
-      </h1>
-      <div className="header-info">
-        <Search />
-        <Theme />
+      <div className="header-wrap">
+        <h1 onClick={() => navigator('/')}>
+          <span>MovieTV</span>
+        </h1>
+        <div className="header-info">
+          <Search />
+          <Theme />
+        </div>
       </div>
     </header>
   );
