@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 
 const Search = () => {
   const navigator = useNavigate();
-  const { value, onInputChange } = useInput();
+  const { value, setValue, onInputChange } = useInput();
   const [movieState, setMovieState] = useRecoilState(movieAtom);
 
   const onSubmitSearchMovie = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -37,6 +37,8 @@ const Search = () => {
         totalResults: 0
       });
     }
+
+    setValue('');
   };
 
   return (
