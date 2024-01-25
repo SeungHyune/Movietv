@@ -1,6 +1,6 @@
 import { movieAtom } from '@/atoms/movie';
 import { useRecoilState } from 'recoil';
-import { fetchMovieList } from '@/api/movieSearch';
+import { fetchMovieList } from '@/api/movie';
 import MovieItem from './MovieItem';
 import MovieTotalResult from './MovieTotalResult';
 
@@ -12,7 +12,7 @@ const MovieList = () => {
 
   const handleAddMovie = async () => {
     console.log(movieState.title);
-    const res = await fetchMovieList(movieState.title, movieState.page);
+    const res = await fetchMovieList({ title: movieState.title, page: movieState.page });
     const { Search } = res;
 
     setMovieState({

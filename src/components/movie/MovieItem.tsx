@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { MovieInfoResponse } from '../../types/movieTypes';
-import { fetchMovieInfo } from '@/api/movieInfo';
+import { fetchMovieInfo } from '@/api/movie';
 import { useRecoilState } from 'recoil';
 import { movieAtom } from '@/atoms/movie';
 
@@ -13,7 +13,7 @@ const MovieItem = ({ movie }: MovieItemProps) => {
   const navigate = useNavigate();
 
   const handleMovieInfo = async () => {
-    const movieInfo = await fetchMovieInfo(movie.imdbID);
+    const movieInfo = await fetchMovieInfo({ id: movie.imdbID });
 
     setMovieState({
       ...movieState,

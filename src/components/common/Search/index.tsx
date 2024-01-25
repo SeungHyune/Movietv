@@ -1,7 +1,7 @@
 import { movieAtom } from '@/atoms/movie';
 import { useRecoilState } from 'recoil';
 import { useInput } from '@/hooks/useInput';
-import { fetchMovieList } from '../../../api/movieSearch';
+import { fetchMovieList } from '@/api/movie';
 import { FaSearch } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 
@@ -14,8 +14,7 @@ const Search = () => {
     event.preventDefault();
 
     if (movieState.title === value) return;
-
-    const res = await fetchMovieList(value);
+    const res = await fetchMovieList({ title: value });
     navigator(`movie/${value}`);
 
     const { Search, totalResults } = res;
@@ -26,7 +25,7 @@ const Search = () => {
         movieList: [...Search],
         title: value,
         page: movieState.page + 1,
-        totalResults
+        totalResults: Number(totalResults)
       });
     } else {
       setMovieState({
