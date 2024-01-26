@@ -12,18 +12,21 @@ const MovieList = () => {
 
   const handleAddMovie = async () => {
     console.log(movieState.title);
-    const res = await fetchMovieList({ title: movieState.title, page: movieState.page });
+    const res = await fetchMovieList({
+      title: movieState.title,
+      page: movieState.page,
+    });
     const { Search } = res;
 
     setMovieState({
       ...movieState,
       movieList: [...movieList, ...Search],
-      page: movieState.page + 1
+      page: movieState.page + 1,
     });
   };
 
   return (
-    <div className="movielist-container">
+    <div className='movielist-container'>
       {movieState.totalResults ? <MovieTotalResult /> : null}
       <ul>
         {movieList.map((movie) => (
@@ -35,8 +38,9 @@ const MovieList = () => {
       </ul>
       {movieList.length ? (
         <button
-          type="button"
-          onClick={handleAddMovie}>
+          type='button'
+          onClick={handleAddMovie}
+        >
           More
         </button>
       ) : null}

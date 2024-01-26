@@ -25,13 +25,14 @@ const Button = ({
     borderRadius: `${radius}`,
     backgroundColor,
     color,
-    fontWeight
+    fontWeight,
   };
 
   return (
     <button
       style={buttonStyle}
-      {...props}>
+      {...props}
+    >
       {text}
     </button>
   );

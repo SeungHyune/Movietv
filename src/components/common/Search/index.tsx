@@ -10,7 +10,9 @@ const Search = () => {
   const { value, setValue, onInputChange } = useInput();
   const [movieState, setMovieState] = useRecoilState(movieAtom);
 
-  const onSubmitSearchMovie = async (event: React.FormEvent<HTMLFormElement>) => {
+  const onSubmitSearchMovie = async (
+    event: React.FormEvent<HTMLFormElement>,
+  ) => {
     event.preventDefault();
 
     if (movieState.title === value) return;
@@ -25,7 +27,7 @@ const Search = () => {
         movieList: [...Search],
         title: value,
         page: movieState.page + 1,
-        totalResults: Number(totalResults)
+        totalResults: Number(totalResults),
       });
     } else {
       setMovieState({
@@ -33,7 +35,7 @@ const Search = () => {
         movieList: [],
         page: 1,
         title: value,
-        totalResults: 0
+        totalResults: 0,
       });
     }
 
@@ -43,8 +45,8 @@ const Search = () => {
   return (
     <form onSubmit={onSubmitSearchMovie}>
       <input
-        type="text"
-        placeholder="검색어를 입력해주세요."
+        type='text'
+        placeholder='검색어를 입력해주세요.'
         value={value}
         onChange={onInputChange}
       />

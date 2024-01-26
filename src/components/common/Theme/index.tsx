@@ -33,7 +33,7 @@ const Theme = () => {
       isDark: !movieState.isDark,
     });
 
-    setItem(THEME, movieState.isDark);
+    setItem(THEME, !movieState.isDark);
   };
 
   return (

@@ -6,7 +6,9 @@ interface MovieInfoProps {
   id: string;
 }
 
-export const fetchMovieInfo = async ({ id }: MovieInfoProps): Promise<ResponseValue> => {
+export const fetchMovieInfo = async ({
+  id,
+}: MovieInfoProps): Promise<ResponseValue> => {
   try {
     const response: ResponseValue = await apiClient
       .get('', { params: { apikey: API_KEY, i: id } })
@@ -26,12 +28,12 @@ interface MovieListProps {
 
 export const fetchMovieList = async ({
   title,
-  page = 1
+  page = 1,
 }: MovieListProps): Promise<MovieResponse> => {
   try {
     const response: MovieResponse = await apiClient
       .get('', {
-        params: { apikey: API_KEY, s: title, page }
+        params: { apikey: API_KEY, s: title, page },
       })
       .then((res) => res.data);
 
