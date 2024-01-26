@@ -1,6 +1,8 @@
 import { useRecoilState } from 'recoil';
 import { movieAtom } from '@/atoms/movie';
 import styled from '@emotion/styled';
+import { setItem } from '@/utils/storage';
+import { THEME } from '@/constants/theme';
 
 const ButtonTheme = styled.button`
   display: flex;
@@ -28,17 +30,17 @@ const Theme = () => {
   const onThemeChange = () => {
     setMovieState({
       ...movieState,
-      isTheme: !movieState.isTheme
+      isDark: !movieState.isDark,
     });
+
+    setItem(THEME, movieState.isDark);
   };
 
   return (
     <ButtonTheme onClick={onThemeChange}>
       <img
         src={
-          movieState.isTheme
-            ? 'https://github.com/SeungHyune/vue-movie/blob/main/image/theme/light-icon.png?raw=true'
-            : 'https://github.com/SeungHyune/vue-movie/blob/main/image/theme/dark-icon.png?raw=true'
+          movieState.isDark ? '/assets/light-icon.png' : '/assets/dark-icon.png'
         }
       />
     </ButtonTheme>
