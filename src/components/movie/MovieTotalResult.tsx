@@ -5,7 +5,7 @@ import styled from '@emotion/styled';
 const MovieTotalResult = () => {
   const [movieState] = useRecoilState(movieAtom);
   const { title, totalResults } = movieState;
-  console.log(movieState);
+
   return (
     <MovieTotalResultContainer>
       <h3>{title}</h3>
