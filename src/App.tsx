@@ -6,6 +6,7 @@ import Home from '@/components/layout/Home';
 import MovieList from '@/components/movie/MovieList';
 import MovieInfo from '@/components/movie/MovieInfo';
 import '@/styles/main.scss';
+import styled from '@emotion/styled';
 
 function App() {
   const [movieState] = useRecoilState(movieAtom);
@@ -13,7 +14,7 @@ function App() {
     <BrowserRouter>
       <div className={`wrapper ${movieState.isDark ? 'dark' : 'light'}`}>
         <Header />
-        <main>
+        <Main>
           <div className='main-wrap'>
             <Routes>
               <Route
@@ -30,10 +31,15 @@ function App() {
               />
             </Routes>
           </div>
-        </main>
+        </Main>
       </div>
     </BrowserRouter>
   );
 }
+
+const Main = styled.main`
+  padding-top: 80px;
+  min-height: 100vh;
+`;
 
 export default App;
