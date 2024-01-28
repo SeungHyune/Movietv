@@ -1,34 +1,43 @@
 import { movieAtom } from '@/atoms/movie';
 import { useRecoilState } from 'recoil';
 import { fetchMovieList } from '@/api/movie';
+import { useParams } from 'react-router-dom';
 import styled from '@emotion/styled';
 import MovieItem from './MovieItem';
 import MovieTotalResult from './MovieTotalResult';
-
-import './movie.css';
+import { useEffect } from 'react';
 
 const MovieList = () => {
+  const { movieTitle = '' } = useParams();
   const [movieState, setMovieState] = useRecoilState(movieAtom);
   const { movieList } = movieState;
 
   const handleAddMovie = async () => {
-    console.log(movieState.title);
     const res = await fetchMovieList({
-      title: movieState.title,
+      title: movieTitle,
       page: movieState.page,
     });
-    const { Search } = res;
+
+    const { Search, totalResults } = res;
 
     setMovieState({
       ...movieState,
+      title: movieTitle,
       movieList: [...movieList, ...Search],
       page: movieState.page + 1,
+      totalResults: Number(totalResults),
     });
   };
 
+  useEffect(() => {
+    if (movieTitle && movieState.page === 1) {
+      handleAddMovie();
+    }
+  }, []);
+
   return (
     <MovieListContainer>
-      {movieState.totalResults ? <MovieTotalResult /> : null}
+      <MovieTotalResult />
       <ul>
         {movieList.map((movie) => (
           <MovieItem

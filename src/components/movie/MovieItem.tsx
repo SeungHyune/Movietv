@@ -17,17 +17,17 @@ const MovieItem = ({ movie }: MovieItemProps) => {
 
     setMovieState({
       ...movieState,
-      movieInfo: { ...movieInfo }
+      movieInfo: { ...movieInfo },
     });
     navigate(`./${movie.imdbID}`);
   };
 
   return (
     <li onClick={handleMovieInfo}>
-      <div className="movie-poster">
+      <div className='movie-poster'>
         <img src={movie.Poster} />
       </div>
-      <div className="movie-info">
+      <div className='movie-info'>
         <strong>{movie.Title}</strong>
         <span>{movie.Year}</span>
       </div>
