@@ -3,9 +3,9 @@ import { useState } from 'react';
 export const useInput = () => {
   const [value, setValue] = useState('');
 
-  const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
   };
 
-  return { value, setValue, onInputChange };
+  return { value, setValue, handleInputChange };
 };

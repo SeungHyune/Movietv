@@ -7,10 +7,10 @@ import { useNavigate } from 'react-router-dom';
 
 const Search = () => {
   const navigator = useNavigate();
-  const { value, setValue, onInputChange } = useInput();
+  const { value, setValue, handleInputChange } = useInput();
   const [movieState, setMovieState] = useRecoilState(movieAtom);
 
-  const onSubmitSearchMovie = async (
+  const handleSubmitSearchMovie = async (
     event: React.FormEvent<HTMLFormElement>,
   ) => {
     event.preventDefault();
@@ -43,12 +43,12 @@ const Search = () => {
   };
 
   return (
-    <form onSubmit={onSubmitSearchMovie}>
+    <form onSubmit={handleSubmitSearchMovie}>
       <input
         type='text'
         placeholder='검색어를 입력해주세요.'
         value={value}
-        onChange={onInputChange}
+        onChange={handleInputChange}
       />
       <button>
         <FaSearch />
