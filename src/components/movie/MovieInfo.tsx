@@ -1,20 +1,22 @@
-import { useRecoilState } from 'recoil';
-import { movieAtom } from '@/atoms/movie';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import styled from '@emotion/styled';
 import Button from '@/components/common/Button';
 import { ResponseValue } from '@/types/movieTypes';
+import { useMovieInfo } from '@/hooks/useMovieInfo';
 
 const MovieInfo = () => {
+  const { id = '' } = useParams();
   const navigate = useNavigate();
-  const [movieState] = useRecoilState(movieAtom);
-  const { movieInfo } = movieState;
+
+  const { data: movieInfo } = useMovieInfo({ id });
+  console.log(movieInfo);
+  if (!movieInfo) return;
 
   return (
     <MovieInfoWrapper>
       <MovieInfoCoverImage movieInfo={movieInfo} />
       <MovieInfoContainer>
-        <div className="movie-poster">
+        <div className='movie-poster'>
           <img
             src={movieInfo.Poster}
             alt={movieInfo.Title}
@@ -23,7 +25,7 @@ const MovieInfo = () => {
         <MovieInfoContent>
           <h3>{movieInfo.Title}</h3>
           <mark>{movieInfo.imdbRating}</mark>
-          <ul className="movie-info-list">
+          <ul className='movie-info-list'>
             <li>
               <strong>Director</strong>
               <span>{movieInfo.Director}</span>
@@ -44,11 +46,11 @@ const MovieInfo = () => {
         </MovieInfoContent>
       </MovieInfoContainer>
       <Button
-        text="Prev Page"
-        radius="50px"
-        backgroundColor="#e13232"
-        color="#ffffff"
-        fontWeight="bold"
+        text='Prev Page'
+        radius='50px'
+        backgroundColor='#e13232'
+        color='#ffffff'
+        fontWeight='bold'
         onClick={() => navigate(-1)}
       />
     </MovieInfoWrapper>
