@@ -41,7 +41,7 @@ const HeaderContainer = styled.header`
   width: 100%;
   background-color: #f1f1f1;
   box-shadow: #959da533 0 8px 24px;
-  z-index: 10;
+  z-index: 100;
 
   .header-wrap {
     max-width: 1400px;
