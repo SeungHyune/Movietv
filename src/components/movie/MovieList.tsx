@@ -1,39 +1,46 @@
 import { movieAtom } from '@/atoms/movie';
 import { useRecoilState } from 'recoil';
-import { fetchMovieList } from '@/api/movie';
 import { useParams } from 'react-router-dom';
 import styled from '@emotion/styled';
 import MovieItem from './MovieItem';
 import MovieTotalResult from './MovieTotalResult';
 import { useEffect } from 'react';
+import { useInfinityScroll } from '@/hooks/useInfinityScroll';
 
 const MovieList = () => {
   const { movieTitle = '' } = useParams();
   const [movieState, setMovieState] = useRecoilState(movieAtom);
-  const { movieList } = movieState;
+  const { movieList, page } = movieState;
 
-  const handleAddMovie = async () => {
-    const res = await fetchMovieList({
-      title: movieTitle,
-      page: movieState.page,
-    });
+  const {
+    data,
+    status,
+    error,
+    fetchNextPage,
+    isFetchingNextPage,
+    hasNextPage,
+  } = useInfinityScroll({
+    title: movieTitle,
+  });
 
-    const { Search, totalResults } = res;
+  useEffect(() => {
+    if (!data) return;
+    const { pages } = data;
+    const { Search, totalResults } = pages[pages.length - 1];
+
+    if (page > pages.length) return;
 
     setMovieState({
       ...movieState,
-      title: movieTitle,
       movieList: [...movieList, ...Search],
-      page: movieState.page + 1,
       totalResults: Number(totalResults),
+      page: page + 1,
     });
-  };
+  }, [data]);
 
-  useEffect(() => {
-    if (movieTitle && movieState.page === 1) {
-      handleAddMovie();
-    }
-  }, []);
+  if (status === 'error') {
+    return <p>Error: {error.message}</p>;
+  }
 
   return (
     <MovieListContainer>
@@ -46,14 +53,17 @@ const MovieList = () => {
           />
         ))}
       </ul>
-      {movieList.length ? (
-        <button
-          type='button'
-          onClick={handleAddMovie}
-        >
-          More
-        </button>
-      ) : null}
+      <button
+        disabled={!hasNextPage || isFetchingNextPage}
+        type='button'
+        onClick={() => fetchNextPage()}
+      >
+        {isFetchingNextPage
+          ? 'Loading More...'
+          : hasNextPage
+            ? 'Load More'
+            : 'Nothing more to load'}
+      </button>
     </MovieListContainer>
   );
 };

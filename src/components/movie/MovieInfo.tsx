@@ -9,7 +9,7 @@ const MovieInfo = () => {
   const navigate = useNavigate();
 
   const { data: movieInfo } = useMovieInfo({ id });
-  console.log(movieInfo);
+
   if (!movieInfo) return;
 
   return (

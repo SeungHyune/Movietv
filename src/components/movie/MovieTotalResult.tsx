@@ -1,15 +1,17 @@
 import { useRecoilState } from 'recoil';
 import { movieAtom } from '@/atoms/movie';
 import styled from '@emotion/styled';
+import { useParams } from 'react-router-dom';
 
 const MovieTotalResult = () => {
+  const { movieTitle } = useParams();
   const [movieState] = useRecoilState(movieAtom);
-  const { title, totalResults } = movieState;
+  const { totalResults } = movieState;
 
   return (
     <MovieTotalResultContainer>
       <div>
-        <h3>{title}</h3>
+        <h3>{movieTitle}</h3>
         <span>총 {totalResults}건 검색</span>
       </div>
       {totalResults === 0 && (
