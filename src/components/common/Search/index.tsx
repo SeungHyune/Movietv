@@ -4,11 +4,13 @@ import { useInput } from '@/hooks/useInput';
 import { fetchMovieList } from '@/api/movie';
 import { FaSearch } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
+import { useQueryClient } from '@tanstack/react-query';
 
 const Search = () => {
   const navigator = useNavigate();
   const { value, setValue, handleInputChange } = useInput();
   const [movieState, setMovieState] = useRecoilState(movieAtom);
+  const queryClient = useQueryClient();
 
   const handleSubmitSearchMovie = async (
     event: React.FormEvent<HTMLFormElement>,
@@ -16,6 +18,7 @@ const Search = () => {
     event.preventDefault();
 
     if (movieState.title === value) return;
+    queryClient.clear();
     const res = await fetchMovieList({ title: value });
     navigator(`movie/${value}`);
 
@@ -26,7 +29,7 @@ const Search = () => {
         ...movieState,
         movieList: [...Search],
         title: value,
-        page: movieState.page + 1,
+        page: 2,
         totalResults: Number(totalResults),
       });
     } else {
