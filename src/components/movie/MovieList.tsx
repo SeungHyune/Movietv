@@ -6,8 +6,10 @@ import MovieItem from './MovieItem';
 import MovieTotalResult from './MovieTotalResult';
 import { useEffect } from 'react';
 import { useInfinityScroll } from '@/hooks/useInfinityScroll';
+import { useInView } from 'react-intersection-observer';
 
 const MovieList = () => {
+  const { ref, inView } = useInView();
   const { movieTitle = '' } = useParams();
   const [movieState, setMovieState] = useRecoilState(movieAtom);
   const { movieList, page } = movieState;
@@ -38,6 +40,12 @@ const MovieList = () => {
     });
   }, [data]);
 
+  useEffect(() => {
+    if (inView && hasNextPage) {
+      fetchNextPage();
+    }
+  }, [inView, hasNextPage, fetchNextPage]);
+
   if (status === 'error') {
     return <p>Error: {error.message}</p>;
   }
@@ -46,12 +54,20 @@ const MovieList = () => {
     <MovieListContainer>
       <MovieTotalResult />
       <ul>
-        {movieList.map((movie) => (
-          <MovieItem
-            key={movie.imdbID}
-            movie={movie}
-          />
-        ))}
+        {movieList.map((movie, index) =>
+          movieList.length === index + 1 ? (
+            <MovieItem
+              ref={ref}
+              key={movie.imdbID}
+              movie={movie}
+            />
+          ) : (
+            <MovieItem
+              key={movie.imdbID}
+              movie={movie}
+            />
+          ),
+        )}
       </ul>
       <button
         disabled={!hasNextPage || isFetchingNextPage}
@@ -64,6 +80,7 @@ const MovieList = () => {
             ? 'Load More'
             : 'Nothing more to load'}
       </button>
+      {isFetchingNextPage && <h3>Loading...</h3>}
     </MovieListContainer>
   );
 };
