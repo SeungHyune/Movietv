@@ -1,4 +1,11 @@
 @import './reset.scss';
+body {
+  overflow-y: scroll; 
+  scroll-behavior: smooth; 
+}
+body::-webkit-scrollbar {
+  display: none;
+}
 .wrapper.dark {
   background-color: #000;
   color: #fff;
