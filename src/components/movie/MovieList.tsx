@@ -88,12 +88,33 @@ const MovieList = () => {
 const MovieListContainer = styled.div`
   max-width: 1400px;
   margin: 0 auto;
+
+  @media (max-width: 1400px) {
+    padding: 0 20px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 0 10px;
+  }
+
   ul {
     display: grid;
     grid-template-rows: 1fr;
     grid-template-columns: repeat(5, 1fr);
     row-gap: 20px;
     column-gap: 20px;
+
+    @media (max-width: 992px) {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    @media (max-width: 600px) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    @media (max-width: 480px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
     li {
       position: relative;
       list-style: none;

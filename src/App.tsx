@@ -40,6 +40,10 @@ function App() {
 const Main = styled.main`
   padding-top: 80px;
   min-height: 100vh;
+
+  @media (max-width: 380px) {
+    padding-top: 120px;
+  }
 `;
 
 export default App;

@@ -60,6 +60,7 @@ const MovieInfo = () => {
 const MovieInfoWrapper = styled.div`
   text-align: center;
   margin: 0 auto;
+  padding-bottom: 50px;
 `;
 
 interface MovieWrapperProps {
@@ -78,11 +79,34 @@ const MovieInfoContainer = styled.div`
   max-width: 1400px;
   margin: 50px auto;
   text-align: left;
+
+  @media (max-width: 1400px) {
+    padding: 0 20px;
+  }
+
+  @media (max-width: 680px) {
+    display: block;
+
+    .movie-poster {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 40px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    padding: 0 10px;
+  }
 `;
 
 const MovieInfoContent = styled.div`
   width: calc(100% - 320px);
   margin-left: 20px;
+
+  @media (max-width: 680px) {
+    width: 100%;
+    margin-left: 0;
+  }
 
   & h3 {
     font-size: 26px;

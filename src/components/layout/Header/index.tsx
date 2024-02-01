@@ -43,6 +43,14 @@ const HeaderContainer = styled.header`
   box-shadow: #959da533 0 8px 24px;
   z-index: 100;
 
+  @media (max-width: 1400px) {
+    padding: 0 20px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 0 10px;
+  }
+
   .header-wrap {
     max-width: 1400px;
     width: 100%;
@@ -76,6 +84,13 @@ const HeaderContainer = styled.header`
       display: flex;
       margin-right: 10px;
 
+      @media (max-width: 380px) {
+        position: absolute;
+        top: 80px;
+        left: 0;
+        width: 100%;
+      }
+
       input {
         width: 300px;
         height: 40px;
@@ -84,6 +99,14 @@ const HeaderContainer = styled.header`
         padding: 0 10px;
         font-size: 14px;
         outline: none;
+
+        @media (max-width: 540px) {
+          width: 160px;
+        }
+
+        @media (max-width: 380px) {
+          width: calc(100% - 40px);
+        }
       }
 
       button {
