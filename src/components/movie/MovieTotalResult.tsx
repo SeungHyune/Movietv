@@ -47,6 +47,15 @@ const MovieTotalResultContainer = styled.div`
       font-weight: 600;
     }
   }
+
+  @media (max-width: 380px) {
+    & > div > h3 {
+      font-size: 24px;
+    }
+    & > div > span {
+      font-size: 16px;
+    }
+  }
 `;
 
 const MovieSearchResults = styled.div`

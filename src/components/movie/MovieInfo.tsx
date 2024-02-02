@@ -112,6 +112,10 @@ const MovieInfoContent = styled.div`
     font-size: 26px;
     font-weight: bold;
     margin-bottom: 10px;
+
+    @media (max-width: 380px) {
+      font-size: 22px;
+    }
   }
 
   & mark {
@@ -140,6 +144,15 @@ const MovieInfoContent = styled.div`
         -webkit-line-clamp: 6;
         -webkit-box-orient: vertical;
         overflow: hidden;
+      }
+
+      @media (max-width: 380px) {
+        strong {
+          font-size: 16px;
+        }
+        span {
+          font-size: 14px;
+        }
       }
     }
   }
