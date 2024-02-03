@@ -61,6 +61,10 @@ const MovieTotalResultContainer = styled.div`
 const MovieSearchResults = styled.div`
   padding-top: 50px;
   justify-content: center;
+
+  @media (max-width: 380px) {
+    font-size: 14px;
+  }
 `;
 
 export default MovieTotalResult;
