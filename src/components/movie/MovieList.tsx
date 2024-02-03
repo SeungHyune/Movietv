@@ -7,6 +7,7 @@ import MovieTotalResult from './MovieTotalResult';
 import { useEffect } from 'react';
 import { useInfinityScroll } from '@/hooks/useInfinityScroll';
 import { useInView } from 'react-intersection-observer';
+import { Suspense } from 'react';
 
 const MovieList = () => {
   const { ref, inView } = useInView();
@@ -28,6 +29,9 @@ const MovieList = () => {
   useEffect(() => {
     if (!data) return;
     const { pages } = data;
+    const isPagesData = pages.some((page) => page?.Response === 'False');
+
+    if (isPagesData) return;
     const { Search, totalResults } = pages[pages.length - 1];
 
     if (page > pages.length) return;
@@ -51,37 +55,28 @@ const MovieList = () => {
   }
 
   return (
-    <MovieListContainer>
-      <MovieTotalResult />
-      <ul>
-        {movieList.map((movie, index) =>
-          movieList.length === index + 1 ? (
-            <MovieItem
-              ref={ref}
-              key={movie.imdbID}
-              movie={movie}
-            />
-          ) : (
-            <MovieItem
-              key={movie.imdbID}
-              movie={movie}
-            />
-          ),
-        )}
-      </ul>
-      <button
-        disabled={!hasNextPage || isFetchingNextPage}
-        type='button'
-        onClick={() => fetchNextPage()}
-      >
-        {isFetchingNextPage
-          ? 'Loading More...'
-          : hasNextPage
-            ? 'Load More'
-            : 'Nothing more to load'}
-      </button>
-      {isFetchingNextPage && <h3>Loading...</h3>}
-    </MovieListContainer>
+    <Suspense fallback={<h1>Loading...</h1>}>
+      <MovieListContainer>
+        <MovieTotalResult />
+        <ul>
+          {movieList.map((movie, index) =>
+            movieList.length === index + 1 ? (
+              <MovieItem
+                ref={ref}
+                key={movie.imdbID}
+                movie={movie}
+              />
+            ) : (
+              <MovieItem
+                key={movie.imdbID}
+                movie={movie}
+              />
+            ),
+          )}
+        </ul>
+        {isFetchingNextPage && <h3>Loading...</h3>}
+      </MovieListContainer>
+    </Suspense>
   );
 };
 
