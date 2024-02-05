@@ -7,7 +7,7 @@ interface MovieInfoProps {
 
 export const useMovieInfo = ({ id }: MovieInfoProps) => {
   return useQuery({
-    queryKey: ['movieinfo'],
+    queryKey: ['movieinfo', id],
     queryFn: () => fetchMovieInfo({ id }),
   });
 };
