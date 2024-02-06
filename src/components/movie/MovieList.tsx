@@ -8,6 +8,7 @@ import { useEffect } from 'react';
 import { useInfinityScroll } from '@/hooks/useInfinityScroll';
 import { useInView } from 'react-intersection-observer';
 import { Suspense } from 'react';
+import Button from '../common/Button';
 
 const MovieList = () => {
   const { ref, inView } = useInView();
@@ -75,6 +76,15 @@ const MovieList = () => {
           )}
         </ul>
         {isFetchingNextPage && <h3>Loading...</h3>}
+        <Button
+          width={50}
+          radius='50%'
+          backgroundColor='red'
+          color='white'
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+        >
+          TOP
+        </Button>
       </MovieListContainer>
     </Suspense>
   );
@@ -90,6 +100,33 @@ const MovieListContainer = styled.div`
 
   @media (max-width: 480px) {
     padding: 0 10px;
+  }
+
+  button {
+    position: fixed;
+    right: 15px;
+    bottom: 15px;
+    font-size: 12px;
+    padding-top: 15px;
+    transform: translateY(0);
+    transition: transform 0.2s;
+    z-index: 100;
+
+    &:hover {
+      transform: translateY(-5px);
+    }
+
+    &:after {
+      position: absolute;
+      left: 50%;
+      top: 40%;
+      content: '';
+      width: 17px;
+      height: 17px;
+      border-top: 3px solid #fff;
+      border-right: 3px solid #fff;
+      transform: translate(-50%, -50%) rotate(312deg);
+    }
   }
 
   ul {

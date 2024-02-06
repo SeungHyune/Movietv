@@ -1,12 +1,12 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { movieAtom } from './atoms/movie';
+import styled from '@emotion/styled';
+import '@/styles/main.scss';
 import Header from '@/components/layout/Header';
 import Home from '@/components/layout/Home';
 import MovieList from '@/components/movie/MovieList';
 import MovieInfo from '@/components/movie/MovieInfo';
-import '@/styles/main.scss';
-import styled from '@emotion/styled';
 
 function App() {
   const [movieState] = useRecoilState(movieAtom);

@@ -1,8 +1,8 @@
 interface ButtonProps {
-  text: string;
+  children: string;
   width?: number;
   height?: number;
-  radius: string;
+  radius?: string;
   backgroundColor: string;
   color: string;
   fontWeight?: string;
@@ -10,7 +10,7 @@ interface ButtonProps {
 }
 
 const Button = ({
-  text,
+  children,
   width = 200,
   height = 50,
   radius,
@@ -33,7 +33,7 @@ const Button = ({
       style={buttonStyle}
       {...props}
     >
-      {text}
+      {children}
     </button>
   );
 };
