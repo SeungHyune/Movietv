@@ -46,13 +46,14 @@ const MovieInfo = () => {
         </MovieInfoContent>
       </MovieInfoContainer>
       <Button
-        text='Prev Page'
         radius='50px'
         backgroundColor='#e13232'
         color='#ffffff'
         fontWeight='bold'
         onClick={() => navigate(-1)}
-      />
+      >
+        Prev Page
+      </Button>
     </MovieInfoWrapper>
   );
 };
