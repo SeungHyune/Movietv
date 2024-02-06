@@ -75,6 +75,10 @@ const MovieList = () => {
           )}
         </ul>
         {isFetchingNextPage && <h3>Loading...</h3>}
+        <button onClick={()=>window.scrollTo({
+	top: 0
+    	behavior: 'smooth'
+})}</button>>Top</button>
       </MovieListContainer>
     </Suspense>
   );
