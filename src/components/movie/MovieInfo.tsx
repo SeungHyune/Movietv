@@ -1,8 +1,8 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import styled from '@emotion/styled';
 import Button from '@/components/common/Button';
-import { ResponseValue } from '@/types/movieTypes';
 import { useMovieInfo } from '@/hooks/useMovieInfo';
+import { imageResize } from '@/utils/imageResize';
 
 const MovieInfo = () => {
   const { id = '' } = useParams();
@@ -12,16 +12,20 @@ const MovieInfo = () => {
 
   if (!movieInfo) return;
 
+  const resizePosterImage = imageResize(movieInfo.Poster, 300, 1000);
+
   return (
     <MovieInfoWrapper>
-      <MovieInfoCoverImage movieInfo={movieInfo} />
+      {resizePosterImage === 'N/A' ? null : (
+        <MovieInfoCoverImage resizePosterImage={resizePosterImage} />
+      )}
       <MovieInfoContainer>
         <div className='movie-poster'>
           <img
             src={
-              movieInfo.Poster === 'N/A'
+              resizePosterImage === 'N/A'
                 ? 'https://placehold.co/350x520?text=No+Image'
-                : movieInfo.Poster
+                : resizePosterImage
             }
             alt={movieInfo.Title}
           />
@@ -69,14 +73,18 @@ const MovieInfoWrapper = styled.div`
 `;
 
 interface MovieWrapperProps {
-  movieInfo: ResponseValue;
+  resizePosterImage: string;
 }
 
 const MovieInfoCoverImage = styled.div<MovieWrapperProps>`
   background-position: center;
   background-size: cover;
-  background-image: url(${(props) => props.movieInfo?.Poster});
+  background-image: url(${(props) => props.resizePosterImage});
   height: 200px;
+
+  @media (max-width: 680px) {
+    height: 100px;
+  }
 `;
 
 const MovieInfoContainer = styled.div`
@@ -84,6 +92,11 @@ const MovieInfoContainer = styled.div`
   max-width: 1400px;
   margin: 50px auto;
   text-align: left;
+
+  .movie-poster {
+    max-width: 350px;
+    margin: 0 auto;
+  }
 
   @media (max-width: 1400px) {
     padding: 0 20px;
