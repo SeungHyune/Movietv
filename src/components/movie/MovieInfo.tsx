@@ -18,7 +18,11 @@ const MovieInfo = () => {
       <MovieInfoContainer>
         <div className='movie-poster'>
           <img
-            src={movieInfo.Poster}
+            src={
+              movieInfo.Poster === 'N/A'
+                ? 'https://placehold.co/350x520?text=No+Image'
+                : movieInfo.Poster
+            }
             alt={movieInfo.Title}
           />
         </div>
