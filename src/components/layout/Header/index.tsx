@@ -91,22 +91,28 @@ const HeaderContainer = styled.header`
         width: 100%;
       }
 
-      input {
+      .search {
         width: 300px;
         height: 40px;
-        border: none;
         background-color: #fff;
         padding: 0 10px;
         font-size: 14px;
-        outline: none;
-
-        @media (max-width: 540px) {
-          width: 160px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        input {
+          width: calc(100% - 24px);
+          outline: none;
+          border: 0;
         }
+      }
 
-        @media (max-width: 380px) {
-          width: calc(100% - 40px);
-        }
+      @media (max-width: 540px) {
+        width: 160px;
+      }
+
+      @media (max-width: 380px) {
+        width: calc(100% - 40px);
       }
 
       button {

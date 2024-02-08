@@ -23,9 +23,11 @@ body::-webkit-scrollbar {
         & > button {
           background-color: #fff3;
         }
-        input {
+        .search {
           background-color: #252525;
-          color: #fff;
+          input {
+            background-color: #252525;
+          }
         }
       }
     }
