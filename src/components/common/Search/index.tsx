@@ -1,10 +1,11 @@
-import { movieAtom } from '@/atoms/movie';
+import { useQueryClient } from '@tanstack/react-query';
+import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
+import { movieAtom } from '@/atoms/movie';
+
 import { useInput } from '@/hooks/useInput';
 import { fetchMovieList } from '@/api/movie';
-import { FaSearch } from 'react-icons/fa';
-import { useNavigate } from 'react-router-dom';
-import { useQueryClient } from '@tanstack/react-query';
+import { FaSearch, FaBackspace } from 'react-icons/fa';
 
 const Search = () => {
   const navigator = useNavigate();
@@ -45,14 +46,26 @@ const Search = () => {
     setValue('');
   };
 
+  const handleRemoveSearchText = () => {
+    setValue('');
+  };
+
   return (
     <form onSubmit={handleSubmitSearchMovie}>
-      <input
-        type='text'
-        placeholder='검색어를 입력해주세요.'
-        value={value}
-        onChange={handleInputChange}
-      />
+      <div className='search'>
+        <input
+          type='text'
+          placeholder='검색어를 입력해주세요.'
+          value={value}
+          onChange={handleInputChange}
+        />
+        {value !== '' && (
+          <FaBackspace
+            style={{ cursor: 'pointer' }}
+            onClick={handleRemoveSearchText}
+          />
+        )}
+      </div>
       <button>
         <FaSearch />
       </button>
