@@ -11,7 +11,7 @@ interface MovieListProps {
 export const useInfinityScroll = ({ title }: MovieListProps) => {
   const [movieState] = useRecoilState(movieAtom);
   return useInfiniteQuery({
-    queryKey: ['movielist'],
+    queryKey: ['movielist', title],
     queryFn: ({ pageParam = 1 }) => fetchMovieList({ title, page: pageParam }),
     initialPageParam: 1,
     getNextPageParam: (lastPage, allPages) => {

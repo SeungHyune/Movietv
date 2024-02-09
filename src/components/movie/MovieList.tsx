@@ -9,6 +9,7 @@ import { useInfinityScroll } from '@/hooks/useInfinityScroll';
 import { useInView } from 'react-intersection-observer';
 import { Suspense } from 'react';
 import Button from '../common/Button';
+import Skeleton from '../common/Skeleton';
 
 const MovieList = () => {
   const { ref, inView } = useInView();
@@ -20,6 +21,7 @@ const MovieList = () => {
     data,
     status,
     error,
+    isLoading,
     fetchNextPage,
     isFetchingNextPage,
     hasNextPage,
@@ -58,7 +60,7 @@ const MovieList = () => {
   return (
     <Suspense fallback={<h1>Loading...</h1>}>
       <MovieListContainer>
-        <MovieTotalResult />
+        {!isLoading && <MovieTotalResult />}
         <ul>
           {movieList.map((movie, index) =>
             movieList.length === index + 1 ? (
@@ -74,6 +76,7 @@ const MovieList = () => {
               />
             ),
           )}
+          {isFetchingNextPage && <Skeleton />}
         </ul>
         {isFetchingNextPage && <h3>Loading...</h3>}
         <Button
@@ -151,6 +154,8 @@ const MovieListContainer = styled.div`
       position: relative;
       list-style: none;
       cursor: pointer;
+      max-height: 400px;
+
       &:hover {
         &::before {
           position: absolute;
