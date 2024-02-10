@@ -5,8 +5,8 @@ const Skeleton = () => {
 
   return (
     <>
-      {skeletonArray.map((list, index) => (
-        <SkeletonList key={index} />
+      {skeletonArray.map((list) => (
+        <SkeletonList key={list} />
       ))}
     </>
   );

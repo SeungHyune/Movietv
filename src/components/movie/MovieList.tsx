@@ -33,12 +33,9 @@ const MovieList = () => {
     if (!data) return;
     const { pages } = data;
     const isPagesData = pages.some((page) => page?.Response === 'False');
-
     if (isPagesData) return;
     const { Search, totalResults } = pages[pages.length - 1];
-
     if (page > pages.length) return;
-
     setMovieState({
       ...movieState,
       movieList: [...movieList, ...Search],
