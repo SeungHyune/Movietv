@@ -10,6 +10,7 @@ import { useInView } from 'react-intersection-observer';
 import { Suspense } from 'react';
 import Button from '../common/Button';
 import Skeleton from '../common/Skeleton';
+import Spinner from '../common/Spinner';
 
 const MovieList = () => {
   const { ref, inView } = useInView();
@@ -55,7 +56,7 @@ const MovieList = () => {
   }
 
   return (
-    <Suspense fallback={<h1>Loading...</h1>}>
+    <Suspense fallback={<Spinner />}>
       <MovieListContainer>
         {!isLoading && <MovieTotalResult />}
         <ul>
