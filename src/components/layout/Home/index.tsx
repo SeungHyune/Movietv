@@ -15,6 +15,8 @@ const Home = () => {
 };
 
 const HomeContainer = styled.div`
+margin: 50px 0;
+text-align: center;
   @media (max-width: 380px) {
     p {
       font-size: 14px;
