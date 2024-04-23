@@ -14,7 +14,6 @@ const Header = () => {
       ...movieState,
       title: '',
       movieList: [],
-      page: 1,
       totalResults: 0,
     });
     navigator('/');

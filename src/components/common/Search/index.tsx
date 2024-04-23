@@ -30,14 +30,12 @@ const Search = () => {
         ...movieState,
         movieList: [...Search],
         title: value,
-        page: 2,
         totalResults: Number(totalResults),
       });
     } else {
       setMovieState({
         ...movieState,
         movieList: [],
-        page: 1,
         title: value,
         totalResults: 0,
       });
