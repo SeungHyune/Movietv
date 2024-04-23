@@ -4,7 +4,6 @@ import { useRecoilState } from 'recoil';
 import { movieAtom } from '@/atoms/movie';
 
 import { useInput } from '@/hooks/useInput';
-import { fetchMovieList } from '@/api/movie';
 import { FaSearch, FaBackspace } from 'react-icons/fa';
 
 const Search = () => {
@@ -13,33 +12,24 @@ const Search = () => {
   const [movieState, setMovieState] = useRecoilState(movieAtom);
   const queryClient = useQueryClient();
 
-  const handleSubmitSearchMovie = async (
-    event: React.FormEvent<HTMLFormElement>,
-  ) => {
+  const handleSubmitSearchMovie = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (movieState.title === value) return;
+    if (movieState.title === value) {
+      setValue('');
+      return;
+    }
+
     queryClient.clear();
-    const res = await fetchMovieList({ title: value });
+
     navigator(`movie/${value}`);
 
-    const { Search, totalResults } = res;
-
-    if (Search) {
-      setMovieState({
-        ...movieState,
-        movieList: [...Search],
-        title: value,
-        totalResults: Number(totalResults),
-      });
-    } else {
-      setMovieState({
-        ...movieState,
-        movieList: [],
-        title: value,
-        totalResults: 0,
-      });
-    }
+    setMovieState({
+      ...movieState,
+      movieList: [],
+      title: value,
+      totalResults: 0,
+    });
 
     setValue('');
   };

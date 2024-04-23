@@ -33,7 +33,8 @@ const MovieList = () => {
   });
 
   useEffect(() => {
-    if (!data || data.pageParams.length === 1) return;
+    console.log(data);
+    if (!data) return;
     const { pages } = data;
     const isPagesData = pages.some((page) => page?.Response === 'False');
     if (isPagesData) return;
@@ -67,11 +68,11 @@ const MovieList = () => {
               movie={movie}
             />
           ))}
-          {isFetchingNextPage && <MovieListSkeleton />}
+          {(isFetchingNextPage || isLoading) && <MovieListSkeleton />}
         </ul>
         {isFetchingNextPage && <h3>Loading...</h3>}
         <div
-          style={{ height: '100px' }}
+          style={{ height: '100px', marginTop: '100px' }}
           ref={ref}
         ></div>
         <Button
