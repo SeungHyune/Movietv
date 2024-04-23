@@ -9,14 +9,16 @@ import { useInfinityScroll } from '@/hooks/useInfinityScroll';
 import { useInView } from 'react-intersection-observer';
 import { Suspense } from 'react';
 import Button from '../common/Button';
-import Skeleton from '../common/Skeleton';
+import { MovieListSkeleton, MovieTitleSkeleton } from '../common/Skeleton';
 import Spinner from '../common/Spinner';
 
 const MovieList = () => {
-  const { ref, inView } = useInView();
+  const { ref, inView } = useInView({
+    threshold: 0.8,
+  });
   const { movieTitle = '' } = useParams();
   const [movieState, setMovieState] = useRecoilState(movieAtom);
-  const { movieList, page } = movieState;
+  const { movieList } = movieState;
 
   const {
     data,
@@ -31,25 +33,24 @@ const MovieList = () => {
   });
 
   useEffect(() => {
-    if (!data) return;
+    if (!data || data.pageParams.length === 1) return;
     const { pages } = data;
     const isPagesData = pages.some((page) => page?.Response === 'False');
     if (isPagesData) return;
     const { Search, totalResults } = pages[pages.length - 1];
-    if (page > pages.length) return;
+
     setMovieState({
       ...movieState,
       movieList: [...movieList, ...Search],
       totalResults: Number(totalResults),
-      page: page + 1,
     });
   }, [data]);
 
   useEffect(() => {
-    if (inView && hasNextPage) {
+    if (inView && hasNextPage && !isFetchingNextPage) {
       fetchNextPage();
     }
-  }, [inView, hasNextPage, fetchNextPage]);
+  }, [inView]);
 
   if (status === 'error') {
     return <p>Error: {error.message}</p>;
@@ -58,25 +59,21 @@ const MovieList = () => {
   return (
     <Suspense fallback={<Spinner />}>
       <MovieListContainer>
-        {!isLoading && <MovieTotalResult />}
+        {isLoading ? <MovieTitleSkeleton /> : <MovieTotalResult />}
         <ul>
-          {movieList.map((movie, index) =>
-            movieList.length === index + 1 ? (
-              <MovieItem
-                ref={ref}
-                key={movie.imdbID}
-                movie={movie}
-              />
-            ) : (
-              <MovieItem
-                key={movie.imdbID}
-                movie={movie}
-              />
-            ),
-          )}
-          {isFetchingNextPage && <Skeleton />}
+          {movieList.map((movie) => (
+            <MovieItem
+              key={movie.imdbID}
+              movie={movie}
+            />
+          ))}
+          {isFetchingNextPage && <MovieListSkeleton />}
         </ul>
         {isFetchingNextPage && <h3>Loading...</h3>}
+        <div
+          style={{ height: '100px' }}
+          ref={ref}
+        ></div>
         <Button
           width={50}
           radius='50%'
