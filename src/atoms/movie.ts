@@ -6,7 +6,6 @@ import { THEME } from '@/constants/theme';
 const defaultData = {
   isDark: getItem(THEME, false),
   title: '',
-  totalResults: 0,
   movieInfo: {} as ResponseValue,
 };
 

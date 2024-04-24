@@ -1,12 +1,12 @@
-import { useRecoilState } from 'recoil';
-import { movieAtom } from '@/atoms/movie';
 import styled from '@emotion/styled';
 import { useParams } from 'react-router-dom';
 
-const MovieTotalResult = () => {
+interface MovieTotalResultProps {
+  totalResults: number;
+}
+
+const MovieTotalResult = ({ totalResults }: MovieTotalResultProps) => {
   const { movieTitle } = useParams();
-  const [movieState] = useRecoilState(movieAtom);
-  const { totalResults } = movieState;
 
   return (
     <MovieTotalResultContainer>

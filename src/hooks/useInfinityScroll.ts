@@ -4,18 +4,20 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 
 interface MovieListProps {
   title: string;
-  totalResults: number;
   pageParam?: number;
 }
 
-export const useInfinityScroll = ({ title, totalResults }: MovieListProps) => {
+export const useInfinityScroll = ({ title }: MovieListProps) => {
   return useInfiniteQuery({
     queryKey: [queryKey.MOVIE_LIST, title],
     queryFn: ({ pageParam = 1 }) => fetchMovieList({ title, page: pageParam }),
     initialPageParam: 1,
-    getNextPageParam: (_, allPages) => {
+    getNextPageParam: (lastPage, allPages) => {
       const nextPage =
-        allPages.length * 10 < totalResults ? allPages.length + 1 : undefined;
+        Number(lastPage.totalResults) > allPages.length * 10
+          ? allPages.length + 1
+          : undefined;
+
       return nextPage;
     },
   });

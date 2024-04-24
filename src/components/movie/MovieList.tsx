@@ -1,5 +1,3 @@
-import { movieAtom } from '@/atoms/movie';
-import { useRecoilState } from 'recoil';
 import { useParams } from 'react-router-dom';
 import styled from '@emotion/styled';
 import MovieItem from './MovieItem';
@@ -14,11 +12,11 @@ import Spinner from '../common/Spinner';
 
 const MovieList = () => {
   const { ref, inView } = useInView({
-    threshold: 0.8,
+    threshold: 0.9,
+    rootMargin: '40px',
   });
+
   const { movieTitle = '' } = useParams();
-  const [movieState, setMovieState] = useRecoilState(movieAtom);
-  const { totalResults } = movieState;
 
   const {
     data,
@@ -30,22 +28,7 @@ const MovieList = () => {
     hasNextPage,
   } = useInfinityScroll({
     title: movieTitle,
-    totalResults,
   });
-
-  useEffect(() => {
-    if (data) {
-      const { pages } = data;
-      const isPagesData = pages.some((page) => page?.Response === 'False');
-      if (isPagesData) return;
-      const { totalResults } = pages[pages.length - 1];
-
-      setMovieState({
-        ...movieState,
-        totalResults: Number(totalResults),
-      });
-    }
-  }, [data]);
 
   useEffect(() => {
     if (inView && hasNextPage && !isFetchingNextPage) {
@@ -60,36 +43,43 @@ const MovieList = () => {
   if (data?.pages[0].Response === 'False') {
     return (
       <MovieListContainer>
-        <MovieTotalResult />
+        <MovieTotalResult totalResults={0} />
       </MovieListContainer>
     );
   }
 
+  const movieList = data?.pages.flatMap((moviePage) => moviePage.Search);
+
   return (
     <Suspense fallback={<Spinner />}>
       <MovieListContainer>
-        {isLoading ? <MovieTitleSkeleton /> : <MovieTotalResult />}
+        {isLoading ? (
+          <MovieTitleSkeleton />
+        ) : (
+          <MovieTotalResult
+            totalResults={
+              data?.pages[0].totalResults
+                ? Number(data?.pages[0].totalResults)
+                : 0
+            }
+          />
+        )}
         <ul>
-          {data?.pages.map(({ Search }) =>
-            Search.map((movie) => (
-              <MovieItem
-                key={movie.imdbID}
-                movie={movie}
-              />
-            )),
-          )}
-          {(isFetchingNextPage || isLoading || !data) && <MovieListSkeleton />}
+          {movieList?.map((movie) => (
+            <MovieItem
+              key={movie.imdbID}
+              movie={movie}
+            />
+          ))}
+          {(isFetchingNextPage || isLoading) && <MovieListSkeleton />}
         </ul>
         {isFetchingNextPage && <h3>Loading...</h3>}
         <div
           style={{
-            height: '100px',
-            marginTop: '100px',
+            height: '200px',
           }}
           ref={ref}
-        >
-          안녕하세요
-        </div>
+        ></div>
         <Button
           width={50}
           radius='50%'
