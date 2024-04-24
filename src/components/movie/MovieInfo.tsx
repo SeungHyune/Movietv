@@ -1,4 +1,3 @@
-import { Suspense } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import styled from '@emotion/styled';
 import Button from '@/components/common/Button';
@@ -10,63 +9,63 @@ const MovieInfo = () => {
   const { id = '' } = useParams();
   const navigate = useNavigate();
 
-  const { data: movieInfo } = useMovieInfo({ id });
+  const { data: movieInfo, isLoading } = useMovieInfo({ id });
 
-  if (!movieInfo) return;
+  if (isLoading || !movieInfo) {
+    return <Spinner />;
+  }
 
   const resizePosterImage = imageResize(movieInfo.Poster, 300, 1000);
 
   return (
-    <Suspense fallback={<Spinner />}>
-      <MovieInfoWrapper>
-        {resizePosterImage === 'N/A' ? null : (
-          <MovieInfoCoverImage resizePosterImage={resizePosterImage} />
-        )}
-        <MovieInfoContainer>
-          <div className='movie-poster'>
-            <img
-              src={
-                resizePosterImage === 'N/A'
-                  ? 'https://placehold.co/350x520?text=No+Image'
-                  : resizePosterImage
-              }
-              alt={movieInfo.Title}
-            />
-          </div>
-          <MovieInfoContent>
-            <h3>{movieInfo.Title}</h3>
-            <mark>{movieInfo.imdbRating}</mark>
-            <ul className='movie-info-list'>
-              <li>
-                <strong>Director</strong>
-                <span>{movieInfo.Director}</span>
-              </li>
-              <li>
-                <strong>Actors</strong>
-                <span>{movieInfo.Actors}</span>
-              </li>
-              <li>
-                <strong>Released</strong>
-                <span>{movieInfo.Released}</span>
-              </li>
-              <li>
-                <strong>Plot</strong>
-                <span>{movieInfo.Plot}</span>
-              </li>
-            </ul>
-          </MovieInfoContent>
-        </MovieInfoContainer>
-        <Button
-          radius='50px'
-          backgroundColor='#e13232'
-          color='#ffffff'
-          fontWeight='bold'
-          onClick={() => navigate(-1)}
-        >
-          Prev Page
-        </Button>
-      </MovieInfoWrapper>
-    </Suspense>
+    <MovieInfoWrapper>
+      {resizePosterImage === 'N/A' ? null : (
+        <MovieInfoCoverImage resizePosterImage={resizePosterImage} />
+      )}
+      <MovieInfoContainer>
+        <div className='movie-poster'>
+          <img
+            src={
+              resizePosterImage === 'N/A'
+                ? 'https://placehold.co/350x520?text=No+Image'
+                : resizePosterImage
+            }
+            alt={movieInfo.Title}
+          />
+        </div>
+        <MovieInfoContent>
+          <h3>{movieInfo.Title}</h3>
+          <mark>{movieInfo.imdbRating}</mark>
+          <ul className='movie-info-list'>
+            <li>
+              <strong>Director</strong>
+              <span>{movieInfo.Director}</span>
+            </li>
+            <li>
+              <strong>Actors</strong>
+              <span>{movieInfo.Actors}</span>
+            </li>
+            <li>
+              <strong>Released</strong>
+              <span>{movieInfo.Released}</span>
+            </li>
+            <li>
+              <strong>Plot</strong>
+              <span>{movieInfo.Plot}</span>
+            </li>
+          </ul>
+        </MovieInfoContent>
+      </MovieInfoContainer>
+      <Button
+        radius='50px'
+        backgroundColor='#e13232'
+        color='#ffffff'
+        fontWeight='bold'
+        onClick={() => navigate(-1)}
+      >
+        Prev Page
+      </Button>
+    </MovieInfoWrapper>
   );
 };
 
@@ -98,7 +97,7 @@ const MovieInfoContainer = styled.div`
   text-align: left;
 
   .movie-poster {
-    max-width: 350px;
+    width: 350px;
     margin: 0 auto;
   }
 
