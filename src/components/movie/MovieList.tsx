@@ -18,7 +18,7 @@ const MovieList = () => {
   });
   const { movieTitle = '' } = useParams();
   const [movieState, setMovieState] = useRecoilState(movieAtom);
-  const { movieList } = movieState;
+  const { totalResults } = movieState;
 
   const {
     data,
@@ -30,21 +30,21 @@ const MovieList = () => {
     hasNextPage,
   } = useInfinityScroll({
     title: movieTitle,
+    totalResults,
   });
 
   useEffect(() => {
-    console.log(data);
-    if (!data) return;
-    const { pages } = data;
-    const isPagesData = pages.some((page) => page?.Response === 'False');
-    if (isPagesData) return;
-    const { Search, totalResults } = pages[pages.length - 1];
+    if (data) {
+      const { pages } = data;
+      const isPagesData = pages.some((page) => page?.Response === 'False');
+      if (isPagesData) return;
+      const { totalResults } = pages[pages.length - 1];
 
-    setMovieState({
-      ...movieState,
-      movieList: [...movieList, ...Search],
-      totalResults: Number(totalResults),
-    });
+      setMovieState({
+        ...movieState,
+        totalResults: Number(totalResults),
+      });
+    }
   }, [data]);
 
   useEffect(() => {
@@ -57,24 +57,39 @@ const MovieList = () => {
     return <p>Error: {error.message}</p>;
   }
 
+  if (data?.pages[0].Response === 'False') {
+    return (
+      <MovieListContainer>
+        <MovieTotalResult />
+      </MovieListContainer>
+    );
+  }
+
   return (
     <Suspense fallback={<Spinner />}>
       <MovieListContainer>
         {isLoading ? <MovieTitleSkeleton /> : <MovieTotalResult />}
         <ul>
-          {movieList.map((movie) => (
-            <MovieItem
-              key={movie.imdbID}
-              movie={movie}
-            />
-          ))}
-          {(isFetchingNextPage || isLoading) && <MovieListSkeleton />}
+          {data?.pages.map(({ Search }) =>
+            Search.map((movie) => (
+              <MovieItem
+                key={movie.imdbID}
+                movie={movie}
+              />
+            )),
+          )}
+          {(isFetchingNextPage || isLoading || !data) && <MovieListSkeleton />}
         </ul>
         {isFetchingNextPage && <h3>Loading...</h3>}
         <div
-          style={{ height: '100px', marginTop: '100px' }}
+          style={{
+            height: '100px',
+            marginTop: '100px',
+          }}
           ref={ref}
-        ></div>
+        >
+          안녕하세요
+        </div>
         <Button
           width={50}
           radius='50%'

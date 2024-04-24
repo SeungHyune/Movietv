@@ -26,7 +26,6 @@ const Search = () => {
 
     setMovieState({
       ...movieState,
-      movieList: [],
       title: value,
       totalResults: 0,
     });

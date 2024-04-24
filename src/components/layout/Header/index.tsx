@@ -13,22 +13,21 @@ const Header = () => {
     setMovieState({
       ...movieState,
       title: '',
-      movieList: [],
       totalResults: 0,
     });
     navigator('/');
   };
   return (
     <HeaderContainer>
-      <div className='header-wrap'>
+      <section className='header-wrap'>
         <h1 onClick={onMovieListReset}>
           <span>MovieTV</span>
         </h1>
-        <div className='header-info'>
+        <article className='header-info'>
           <Search />
           <Theme />
-        </div>
-      </div>
+        </article>
+      </section>
     </HeaderContainer>
   );
 };
