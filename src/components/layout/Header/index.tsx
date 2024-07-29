@@ -13,7 +13,6 @@ const Header = () => {
     setMovieState({
       ...movieState,
       title: '',
-      totalResults: 0,
     });
     navigator('/');
   };
@@ -82,13 +81,6 @@ const HeaderContainer = styled.header`
       display: flex;
       margin-right: 10px;
 
-      @media (max-width: 380px) {
-        position: absolute;
-        top: 80px;
-        left: 0;
-        width: 100%;
-      }
-
       .search {
         width: 300px;
         height: 40px;
@@ -98,6 +90,11 @@ const HeaderContainer = styled.header`
         display: flex;
         align-items: center;
         justify-content: space-between;
+
+        @media (max-width: 380px) {
+          width: calc(100% - 40px);
+        }
+
         input {
           width: calc(100% - 24px);
           outline: none;
@@ -110,7 +107,10 @@ const HeaderContainer = styled.header`
       }
 
       @media (max-width: 380px) {
-        width: calc(100% - 40px);
+        position: absolute;
+        top: 80px;
+        left: 0;
+        width: 100%;
       }
 
       button {
