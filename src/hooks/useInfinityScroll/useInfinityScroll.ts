@@ -7,7 +7,7 @@ interface MovieListProps {
   pageParam?: number;
 }
 
-export const useInfinityScroll = ({ title }: MovieListProps) => {
+const useInfinityScroll = ({ title }: MovieListProps) => {
   return useInfiniteQuery({
     queryKey: [queryKey.MOVIE_LIST, title],
     queryFn: ({ pageParam = 1 }) => fetchMovieList({ title, page: pageParam }),
@@ -22,3 +22,5 @@ export const useInfinityScroll = ({ title }: MovieListProps) => {
     },
   });
 };
+
+export default useInfinityScroll;

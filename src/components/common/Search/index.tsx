@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { movieAtom } from '@/atoms/movie';
 
-import { useInput } from '@/hooks/useInput';
+import { useInput } from '@/hooks';
 import { FaSearch, FaBackspace } from 'react-icons/fa';
 
 const Search = () => {

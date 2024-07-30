@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import MovieItem from './MovieItem';
 import MovieTotalResult from './MovieTotalResult';
 import { useEffect } from 'react';
-import { useInfinityScroll } from '@/hooks/useInfinityScroll';
+import { useInfinityScroll } from '@/hooks';
 import { useInView } from 'react-intersection-observer';
 import { Suspense } from 'react';
 import Button from '../common/Button';
