@@ -1,30 +1,42 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import styled from '@emotion/styled';
 import Button from '@/components/common/Button';
-import { useMovieInfo } from '@/hooks/useMovieInfo';
+import { useMovieInfo, useImageLoadStatus } from '@/hooks';
 import { imageResize } from '@/utils/imageResize';
 import Spinner from '../common/Spinner';
+import { useRef } from 'react';
 
 const MovieInfo = () => {
   const { id = '' } = useParams();
   const navigate = useNavigate();
+  const imgRef = useRef<HTMLImageElement | null>(null);
 
   const { data: movieInfo, isLoading } = useMovieInfo({ id });
+
+  const isImageLoad = useImageLoadStatus({
+    ref: imgRef,
+    src: movieInfo?.Poster,
+  });
+
+  console.log('isImageLoad', isImageLoad);
 
   if (isLoading || !movieInfo) {
     return <Spinner />;
   }
+  console.log(movieInfo);
 
   const resizePosterImage = imageResize(movieInfo.Poster, 300, 1000);
 
   return (
     <MovieInfoWrapper>
+      {!isImageLoad && <Spinner />}
       {resizePosterImage === 'N/A' ? null : (
         <MovieInfoCoverImage resizePosterImage={resizePosterImage} />
       )}
       <MovieInfoContainer>
         <div className='movie-poster'>
           <img
+            ref={imgRef}
             src={
               resizePosterImage === 'N/A'
                 ? 'https://placehold.co/350x520?text=No+Image'
@@ -33,38 +45,42 @@ const MovieInfo = () => {
             alt={movieInfo.Title}
           />
         </div>
-        <MovieInfoContent>
-          <h3>{movieInfo.Title}</h3>
-          <mark>{movieInfo.imdbRating}</mark>
-          <ul className='movie-info-list'>
-            <li>
-              <strong>Director</strong>
-              <span>{movieInfo.Director}</span>
-            </li>
-            <li>
-              <strong>Actors</strong>
-              <span>{movieInfo.Actors}</span>
-            </li>
-            <li>
-              <strong>Released</strong>
-              <span>{movieInfo.Released}</span>
-            </li>
-            <li>
-              <strong>Plot</strong>
-              <span>{movieInfo.Plot}</span>
-            </li>
-          </ul>
-        </MovieInfoContent>
+        {isImageLoad && (
+          <MovieInfoContent>
+            <h3>{movieInfo.Title}</h3>
+            <mark>{movieInfo.imdbRating}</mark>
+            <ul className='movie-info-list'>
+              <li>
+                <strong>Director</strong>
+                <span>{movieInfo.Director}</span>
+              </li>
+              <li>
+                <strong>Actors</strong>
+                <span>{movieInfo.Actors}</span>
+              </li>
+              <li>
+                <strong>Released</strong>
+                <span>{movieInfo.Released}</span>
+              </li>
+              <li>
+                <strong>Plot</strong>
+                <span>{movieInfo.Plot}</span>
+              </li>
+            </ul>
+          </MovieInfoContent>
+        )}
       </MovieInfoContainer>
-      <Button
-        radius='50px'
-        backgroundColor='#e13232'
-        color='#ffffff'
-        fontWeight='bold'
-        onClick={() => navigate(-1)}
-      >
-        Prev Page
-      </Button>
+      {isImageLoad && (
+        <Button
+          radius='50px'
+          backgroundColor='#e13232'
+          color='#ffffff'
+          fontWeight='bold'
+          onClick={() => navigate(-1)}
+        >
+          Prev Page
+        </Button>
+      )}
     </MovieInfoWrapper>
   );
 };
