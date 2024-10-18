@@ -18,12 +18,9 @@ const MovieInfo = () => {
     src: movieInfo?.Poster,
   });
 
-  console.log('isImageLoad', isImageLoad);
-
   if (isLoading || !movieInfo) {
     return <Spinner />;
   }
-  console.log(movieInfo);
 
   const resizePosterImage = imageResize(movieInfo.Poster, 300, 1000);
 
