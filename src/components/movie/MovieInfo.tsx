@@ -1,26 +1,28 @@
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLoaderData, useNavigate, useParams } from 'react-router-dom';
 import styled from '@emotion/styled';
 import Button from '@/components/common/Button';
 import { useMovieInfo, useImageLoadStatus } from '@/hooks';
 import { imageResize } from '@/utils/imageResize';
 import Spinner from '../common/Spinner';
 import { useRef } from 'react';
+import { ResponseValue } from '@/types/movieTypes';
 
 const MovieInfo = () => {
   const { id = '' } = useParams();
   const navigate = useNavigate();
   const imgRef = useRef<HTMLImageElement | null>(null);
 
-  const { data: movieInfo, isLoading } = useMovieInfo({ id });
+  const initialMovieInfoData = useLoaderData() as ResponseValue;
+
+  const { data: movieInfo } = useMovieInfo({
+    id,
+    initialData: initialMovieInfoData,
+  });
 
   const isImageLoad = useImageLoadStatus({
     ref: imgRef,
     src: movieInfo?.Poster,
   });
-
-  if (isLoading || !movieInfo) {
-    return <Spinner />;
-  }
 
   const resizePosterImage = imageResize(movieInfo.Poster, 300, 1000);
 

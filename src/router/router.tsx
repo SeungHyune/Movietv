@@ -1,10 +1,15 @@
 import Root from '@/components/layout/Root';
-import React from 'react';
+import { QueryClient } from '@tanstack/react-query';
+import React, { Suspense } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
+import { movieLoader } from './movieInfo';
+import Spinner from '@/components/common/Spinner';
 
 const Home = React.lazy(() => import('@/components/layout/Home'));
 const MovieList = React.lazy(() => import('@/components/movie/MovieList'));
 const MovieInfo = React.lazy(() => import('@/components/movie/MovieInfo'));
+
+const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
   {
@@ -18,7 +23,12 @@ const router = createBrowserRouter([
       },
       {
         path: '/movie/:movieTitle/:id',
-        element: <MovieInfo />,
+        element: (
+          <Suspense fallback={<Spinner />}>
+            <MovieInfo />
+          </Suspense>
+        ),
+        loader: movieLoader(queryClient),
       },
     ],
   },

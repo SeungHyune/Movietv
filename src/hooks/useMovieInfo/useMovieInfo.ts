@@ -1,15 +1,18 @@
 import { useQuery } from '@tanstack/react-query';
-import { fetchMovieInfo } from '@/api/movie';
-import { queryKey } from '@/constants/queryKey';
+import { movieInfoQueryOption } from '@/router/movieInfo';
+import { ResponseValue } from '@/types/movieTypes';
 
 interface MovieInfoProps {
   id: string;
+  initialData: ResponseValue;
 }
 
-const useMovieInfo = ({ id }: MovieInfoProps) => {
+const useMovieInfo = ({ id, initialData }: MovieInfoProps) => {
+  const { queryKey, queryFn } = movieInfoQueryOption(id);
   return useQuery({
-    queryKey: [queryKey.MOVIE_INFO, id],
-    queryFn: () => fetchMovieInfo({ id }),
+    queryKey,
+    queryFn,
+    initialData,
   });
 };
 
