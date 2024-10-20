@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useLoaderData, useParams } from 'react-router-dom';
 import styled from '@emotion/styled';
 import MovieItem from './MovieItem';
 import MovieTotalResult from './MovieTotalResult';
@@ -9,8 +9,11 @@ import { Suspense } from 'react';
 import Button from '../common/Button';
 import { MovieListSkeleton, MovieTitleSkeleton } from '../common/Skeleton';
 import Spinner from '../common/Spinner';
+import { MovieListInfiniteData } from '@/hooks/useInfinityScroll/useInfinityScroll';
 
 const MovieList = () => {
+  const initialMovieListData = useLoaderData();
+
   const { ref, inView } = useInView({
     threshold: 0.9,
     rootMargin: '40px',
@@ -24,13 +27,19 @@ const MovieList = () => {
     error,
     isLoading,
     fetchNextPage,
+    isFetching,
     isFetchingNextPage,
     hasNextPage,
   } = useInfinityScroll({
     title: movieTitle,
+    initialData: initialMovieListData as MovieListInfiniteData,
   });
 
   useEffect(() => {
+    if (isFetching) {
+      return;
+    }
+
     if (inView && hasNextPage && !isFetchingNextPage) {
       fetchNextPage();
     }

@@ -1,17 +1,26 @@
-import { fetchMovieList } from '@/api/movie';
-import { queryKey } from '@/constants/queryKey';
+import { movieListQueryOption } from '@/router/movieListLoader';
+import { MovieResponse } from '@/types/movieTypes';
 import { useInfiniteQuery } from '@tanstack/react-query';
+
+export interface MovieListInfiniteData {
+  pages: MovieResponse[];
+  pageParams: (number | undefined)[];
+}
 
 interface MovieListProps {
   title: string;
+  initialData: MovieListInfiniteData;
   pageParam?: number;
 }
 
-const useInfinityScroll = ({ title }: MovieListProps) => {
+const useInfinityScroll = ({ title, initialData }: MovieListProps) => {
+  const { queryKey, queryFn } = movieListQueryOption(title);
+
   return useInfiniteQuery({
-    queryKey: [queryKey.MOVIE_LIST, title],
-    queryFn: ({ pageParam = 1 }) => fetchMovieList({ title, page: pageParam }),
+    queryKey,
+    queryFn,
     initialPageParam: 1,
+    initialData,
     getNextPageParam: (lastPage, allPages) => {
       const nextPage =
         Number(lastPage.totalResults) > allPages.length * 10

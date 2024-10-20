@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { movieInfoQueryOption } from '@/router/movieInfo';
+import { movieInfoQueryOption } from '@/router/movieInfoLoader';
 import { ResponseValue } from '@/types/movieTypes';
 
 interface MovieInfoProps {
