@@ -14,7 +14,7 @@ export const movieInfoQueryOption = (id: string): MovieInfoQueryOptionType => ({
   queryFn: () => fetchMovieInfo({ id }),
 });
 
-export const movieLoader =
+export const movieInfoLoader =
   (queryClient: QueryClient) =>
   async ({ params }: LoaderFunctionArgs) => {
     const { id = '' } = params;

@@ -2,7 +2,7 @@ import Root from '@/components/layout/Root';
 import { QueryClient } from '@tanstack/react-query';
 import React, { Suspense } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
-import { movieLoader } from './movieInfo';
+import { movieInfoLoader } from './movieInfoLoader';
 import Spinner from '@/components/common/Spinner';
 
 const Home = React.lazy(() => import('@/components/layout/Home'));
@@ -28,7 +28,7 @@ const router = createBrowserRouter([
             <MovieInfo />
           </Suspense>
         ),
-        loader: movieLoader(queryClient),
+        loader: movieInfoLoader(queryClient),
       },
     ],
   },
